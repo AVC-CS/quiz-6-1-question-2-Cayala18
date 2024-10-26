@@ -1,7 +1,6 @@
 #include "main.hpp"
 
-int main()
-{
+int main() {
     string filename;
     int empN;
 
@@ -12,4 +11,5 @@ int main()
     empN = readFile(filename);
     cout << "The total number of employees read " << empN << endl;
 
+    return 0;
 }

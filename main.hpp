@@ -4,58 +4,62 @@
 using namespace std;
 
 int writeFile(const string& filename) {
-    int empN;
-    cout << "Enter the number of employees: ";
-    cin >> empN;
-
-    ofstream outFile(filename);
-    if (!outFile) {
-        cerr << "Error creating file!" << endl;
-        return 0;
+    ofstream ofs(filename);
+    if (!ofs) {
+        cout << "File Open Error\n";
+        exit(0);
     }
 
-    for (int i = 0; i < empN; ++i) {
-        int id;
+    int num;
+    cout << "Enter the number of employees: ";
+    cin >> num;
+    ofs << num << endl;
+
+    for (int i = 0; i < num; i++) {
+        int ID;
         string name, department;
         double salary;
 
-        cout << "Enter Employee ID: ";
-        cin >> id;
-        cout << "Enter Employee Name: ";
+        cout << "Enter employee ID: ";
+        cin >> ID;
+        ofs << ID << "\t";
+        cout << "Enter employee name: ";
         cin >> name;
-        cout << "Enter Employee Department: ";
+        ofs << name << "\t";
+        cout << "Enter employee department: ";
         cin >> department;
-        cout << "Enter Employee Salary: ";
+        ofs << department << "\t";
+        cout << "Enter employee salary: ";
         cin >> salary;
-
-        outFile << id << " " << name << " " << department << " " << salary << endl;
+        ofs << salary << endl;
     }
 
-    outFile.close();
-    return empN;
+    ofs.close();
+    return num;
 }
 
 int readFile(const string& filename) {
-    ifstream inFile(filename);
-    if (!inFile) {
-        cerr << "Error opening file!" << endl;
-        return 0;
+    ifstream ifs(filename);
+    if (!ifs) {
+        cout << "File Open Error\n";
+        exit(0);
     }
 
-    int empN = 0;
-    int id;
-    string name, department;
+    int num, ID, total = 0;
     double salary;
+    string name, department;
 
+    ifs >> num;
     cout << "\nEmployee Information from file:\n";
-    while (inFile >> id >> name >> department >> salary) {
-        cout << "ID: " << id
-             << ", Name: " << name
-             << ", Department: " << department
-             << ", Salary: " << salary << endl;
-        empN++;
+    for (int i = 0; i < num; i++) {
+        ifs >> ID >> name >> department >> salary;
+        cout << ID << "\t" << name << "\t" << department << "\t" << salary << endl;
+        total += salary;
     }
 
-    inFile.close();
-    return empN;
+    int avg = (num > 0) ? total / num : 0;
+    cout << "Total combined salary: " << total << "\t" << "Average salary: " << avg << endl;
+
+    ifs.close();
+    return num;
 }
